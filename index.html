@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Puzzle</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+		body{
+		  background: #eee;
+		  margin: 0;
+		  font-family: Arial;
+		}
+
+		#image-puzzle{
+			width: 500px;
+			height:500px;
+			position: relative;
+			margin: 100px auto;
+			background-image: url(https://i.imgur.com/IRTK2Vo.jpg);
+			background-size: cover;
+			background-size: 90%;
+			background-repeat: no-repeat;
+			background-position: 30px 15px;
+		}
+
+		.puzzle-piece{
+			display: inline-block;
+			width: 122px;
+			height: 122px;
+			margin: 0;
+			margin-top: 0px;
+			margin-right: 0px;
+			margin-top: -27px;
+			margin-right: -30px;
+			background: url(https://i.imgur.com/yp0N7sG.png);
+			background-repeat: repeat;
+			background-size: auto auto;
+			background-repeat: no-repeat;
+			background-size: contain;
+			font-size: 36px;
+			line-height: 141px;
+			color: #fff;
+			padding-left: 35px;
+			transition: all 0.5s ease;
+			backface-visibility: hidden;
+			cursor: pointer;
+		}
+
+		.puzzle-piece.flip{
+    		transform: rotateY(180deg);
+		}
+
+		.container{
+			text-align: center;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="image-puzzle">
+
+		<div class="puzzle-piece">1</div>
+		<div class="puzzle-piece">2</div>
+		<div class="puzzle-piece">3</div>
+		<div class="puzzle-piece">4</div>
+		<div class="puzzle-piece">5</div>
+		<div class="puzzle-piece">6</div>
+		<div class="puzzle-piece">7</div>
+		<div class="puzzle-piece">8</div>
+		<div class="puzzle-piece">9</div>
+		<div class="puzzle-piece">10</div>
+		<div class="puzzle-piece">11</div>
+		<div class="puzzle-piece">12</div>
+		<div class="puzzle-piece">13</div>
+		<div class="puzzle-piece">14</div>
+		<div class="puzzle-piece">15</div>
+		<div class="puzzle-piece">16</div>
+		<div class="puzzle-piece">17</div>
+		<div class="puzzle-piece">18</div>
+		<div class="puzzle-piece">19</div>
+		<div class="puzzle-piece">20</div>
+		<div class="puzzle-piece">21</div>
+		<div class="puzzle-piece">22</div>
+		<div class="puzzle-piece">23</div>
+		<div class="puzzle-piece">24</div>
+		<div class="puzzle-piece">25</div>
+
+	</div>
+
+	<div class="container">
+		
+		Selecionar Jogo:
+		<label><input type="radio" name="jogo" value="https://puu.sh/AFp8d.png" autocomplete="off"> Jogo 1</label>
+		<label><input type="radio" name="jogo" value="https://puu.sh/AFp9J.png" autocomplete="off"> Jogo 2</label>
+		<label><input type="radio" name="jogo" value="https://puu.sh/AFpaS.png" autocomplete="off"> Jogo 3</label>
+		
+		<br><br>
+
+		<button id="reset">Ocultar Imagem</button>
+		<button id="show-images">Mostrar Imagem</button>
+	</div>
+
+	<script>
+ 		var puzzle = document.getElementById('image-puzzle');
+		var pieces = document.getElementsByClassName('puzzle-piece');
+		for (var i = pieces.length - 1; i >= 0; i--) {
+			pieces[i].addEventListener('click', function(){
+				this.classList.toggle('flip');
+			})
+		}
+
+		document.getElementById('reset').addEventListener('click', hideImage);
+
+		document.getElementById('show-images').addEventListener('click', function(){
+			flipped = document.getElementsByClassName('puzzle-piece');
+			for (var i = flipped.length - 1; i >= 0; i--) {
+				flipped[i].classList.add('flip');
+			}
+		});
+
+		function updateImage(file) {
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = function () {
+				puzzle.style.backgroundImage = `url(${reader.result})`;
+			};
+			reader.onerror = function (error) {
+				alert(`Error: ${error}`)
+			};
+		}
+
+		function hideImage(){
+			flipped = document.getElementsByClassName('flip');
+			for (var i = flipped.length - 1; i >= 0; i--) {
+				flipped[i].classList.remove('flip');
+			}
+		}
+
+		var games = document.querySelectorAll('[name="jogo"]');
+		for (var i = games.length - 1; i >= 0; i--) {
+			games[i].addEventListener('change', function(e){
+				hideImage();
+				puzzle.style.backgroundImage = `url(${this.value})`;
+			})
+		}
+	</script>
+</body>
+</html>
